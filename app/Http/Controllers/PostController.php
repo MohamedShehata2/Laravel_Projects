@@ -18,6 +18,45 @@ class PostController extends Controller
        return view('view',['onePost' => $onePost]);
     }
 
+    function destroy($id)
+    {
+        $post = Post::find($id);
+        $post->delete();
+        return redirect()->route('tabelData');
+    }
+
+
+    function create()
+    {
+        return view('create');
+    }
+
+
+    function store(Request $request)
+    {
+        Post::create($request->all());
+        return redirect()->route('tabelData');
+    }
+
+
+    function update($id)
+    {
+        $post = Post::find($id);
+        return view('update', compact('post'));
+    }
+
+
+    function edit($id, Request $request)
+    {
+        $post = Post::find($id);
+        $post->update($request->except(['_method', '_token']));
+        return redirect()->route('tabelData');
+    }
+
+
+
+
+
 }
 
 

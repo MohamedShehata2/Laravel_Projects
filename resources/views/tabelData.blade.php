@@ -29,7 +29,7 @@
 <table class="table table-hover">
         <thead>
             <tr>
-                <th scope="col">#</th>
+                <th scope="col">Id</th>
                 <th scope="col">Title</th>
                 <th scope="col">Posted By</th>
                 <th scope="col">Created At</th>
@@ -37,16 +37,30 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($posts as $post)
+        <div class="text-center">
+        <button class="btn btn-secondary "><a class="btn" href="{{ route('post.create')}}" >create post</a></button> 
+        </div>
+        @foreach ($posts as $post)
                 <tr>
                     <th>{{ $post->id }}</th>
                     <th>{{ $post->title }}</th>
                     <th>{{ $post->posted_by }}</th>
                     <th>{{ $post->created_at }}</th>
                     <th>
-                        <button class="btn btn-primary"><a href="{{ route('view',['id' => $post->id]) }}" >View</a></button>
-                        <button class="btn btn-secondary">Edit</button>
-                        <button class="btn btn-danger">Delete</button>
+                        <button class="btn btn-info "><a  class="btn" href="{{ route('view',['id' => $post->id]) }}" >View</a></button>
+                        
+                        
+                        <form action="{{ route('post.destroy', $post->id) }}" method="POST">
+                            @method('DELETE')
+                            @csrf()
+                            <button class="btn btn-danger " type="submit">delete</button>
+                        </form>
+
+                       
+
+                        <form action="{{ route('post.update', $post->id) }}">
+                            <button class="btn btn-warning">update</button>
+                        </form>
                     </th>
                 </tr>
             @endforeach
